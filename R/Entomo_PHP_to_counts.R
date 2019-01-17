@@ -17,14 +17,15 @@
 #' `PosteDeCapture` collection point (indoors or oudoors), value = int or ext
 #' `HeureDeCapture` beginning of the collection hours : passible values : 0 to 23
 #' `Genre` genus of the individual mosquito
-#' @param v_hours a vector of collection hours beginning i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning
+#' @param v_hours a vector of sarting hours of collection i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning
 #' @param genre the value (string) of the genus for which counts have to be computed (from factors in the `Genre` column, default : "Anopheles")
 #' @keywords
 #' @return a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2""O3""O4" "I1""I2" "I3" "I4"), count summed indoor and outdoors ("No""Ni"),
 #'  duration of collection indoors and outdoors (d = 4), time in a new referential (t). Per villages and survey.
 #' @export
 #' @examples
-#' Entomo_PHP_to_counts(Entomo_PHP)
+#' v_hours <- c(15:23,0:11)
+#' Entomo_PHP_to_counts(Entomo_PHP, v_hours)
 
 
 Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
@@ -42,9 +43,9 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 	# Create rows for hours with zero vectors collected
 	v_entomo <- levels(Data_Entomo$Vil)
 	e_entomo <- unique(Data_Entomo$Enq)
-	collect_times <- expand.grid(Vil = v_entomo , HeureDeCapture = v_hours, Enq = e_entomo) # Create table with all possible values of Vil, HeureDecapture and Enq
-	Data_Entomo <- left_join(collect_times, Data_Entomo, by=c('Vil','Enq','HeureDeCapture'))						 # join data from Data_Entomo
-	Data_Entomo[is.na(Data_Entomo)] <- 0																				 # Replace NAs by zeros
+	collect_times <- expand.grid(Vil = v_entomo , HeureDeCapture = v_hours, Enq = e_entomo) 	# Create table with all possible values of Vil, HeureDecapture and Enq
+	Data_Entomo <- left_join(collect_times, Data_Entomo, by=c('Vil','Enq','HeureDeCapture'))	# join data to Data_Entomo
+	Data_Entomo[is.na(Data_Entomo)] <- 0																				 							# Replace NAs by zeros
 
 	# Calculate sums vectors collected indoors (Ni) and outdoors (No)
 	Data_Entomo$No <- rowSums(subset(Data_Entomo, select = c(O1,O2,O3,O4)))
