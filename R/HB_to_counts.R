@@ -3,15 +3,12 @@
 #' Also counts number of user outdoors and user indoors but not under net
 #'
 #' `HB_to_counts` returns hourly counts of individual humans in each compartiments (indoor, outdoors, under nets) from a data frame specifying (see MOIROUX et al. 2014)
-#' @param data a data frame of individual behavior data with the following fields with these seven first column (order doesnt matter):
+#' @param data a data frame of individual behavior data with the following fields (order doesnt matter):
 #' `rcpcodevillage`    village code (factor)
-#' `rcpdateenquete` survey date
 #' `rcpcodemenage`    household code
-#' `rcpnomprenomrepdt` household respondent
 #' `rcpnbrenfant1`     nb of children (0-6y) in the household
 #' `rcpnbrenfant2`    nb of children (6-18y) in the household
 #' `rcpnbradulte`			nb of adults in the household
-#' followed by these columns (order doesnt matter):
 #' `rcptrcheage` individual age classes (factor)
 #' `sexe` sexe of the individual (f or m)
 #' `age` age in years of the individual
@@ -28,13 +25,14 @@
 
 HB_to_counts <- function(data = data){
 	require(tidyverse)
-	# extraire les proportion de chaque classe d'âge par villages
-	ODK_HB_R_Menage <- unique(data[,1:7])   # création d'une table "Ménages" contenant une ligne par ménage et ses attributs
 
 	# faire des statistiques (somme d'individus dans chaque classe d'âge) par village
-	ODK_HB_R_Village <- ODK_HB_R_Menage %>% group_by(rcpcodevillage) %>% summarise_at(c("rcpnbrenfant1","rcpnbrenfant2","rcpnbradulte"),sum)
+	ODK_HB_R_Village <-  unique(data[,c("rcpcodevillage", "rcpcodemenage", "rcpnbrenfant1", "rcpnbrenfant2", "rcpnbradulte")]) %>%
+												group_by(rcpcodevillage) %>%
+												summarise_at(c("rcpnbrenfant1","rcpnbrenfant2","rcpnbradulte"),sum)
 	colnames(ODK_HB_R_Village)[2:4] <- c("Total_0_5", "Total_6_17", "Total_Ad")
 
+	# extraire les proportion de chaque classe d'âge par villages
 	ODK_HB_R_Village$sum <- ODK_HB_R_Village$Total_0_5 + ODK_HB_R_Village$Total_6_17 + ODK_HB_R_Village$Total_Ad	# nombre total d'individu dans les ménages recensés
 	ODK_HB_R_Village$P_0_5 <- ODK_HB_R_Village$Total_0_5 / ODK_HB_R_Village$sum 									# proportion d'ind. de chaque classe d'âge
 	ODK_HB_R_Village$P_6_17 <- ODK_HB_R_Village$Total_6_17 / ODK_HB_R_Village$sum
