@@ -1,6 +1,22 @@
 ###### calculation of Exposure at the night level and other interesting indicators
 
-daily_exp_stat <- function(Exposure, tE = 10, tM = 18){
+#' Title
+#'
+#' @param DataExp a dataframe obtained by the use of function `exposure_dat`
+#' @param tE upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 correspond to 22h)
+#' @param tM lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 correspond to 6h)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' Count_HB <- HB_to_counts(ODK_HB_R)
+#' Count_HB$Enq <- 1
+#' Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP)
+#' Exposure <- exposure_dat(Count_HB, Data_Entomo, p = 0.92)
+#' sumExp <- daily_exp_stat(Exposure, tE = 10, tM = 18)
+#'
+daily_exp_stat <- function(DataExp, tE = 10, tM = 18){
 	require(dplyr)
 	expE <- Exposure %>% filter(t < 10)										# select row only for hour before 22h (for evening exposure)
 	expM <- Exposure %>% filter(t >= 18)									# select row only for hour after 6h (for morning exposure)
