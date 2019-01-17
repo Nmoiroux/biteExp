@@ -10,6 +10,10 @@
 #' @export
 #'
 #' @examples
+#' Count_HB <- HB_to_counts(ODK_HB_R)
+#' Count_HB$Enq <- 3
+#' v_hours <- c(15:23,0:11)
+#' Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP, v_hours)
 #' Exposure <- exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 #' plot_exposure(Exposure, vil= "DOG", age = "pop")
 #'
