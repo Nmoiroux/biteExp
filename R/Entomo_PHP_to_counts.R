@@ -16,7 +16,7 @@
 #' `PointDeCapture` collection site (i.e place where collection have been performed both indoors and outdoors) value : 1 to 4
 #' `PosteDeCapture` collection point (indoors or oudoors), value = int or ext
 #' `HeureDeCapture` beginning of the collection hours : passible values : 0 to 23
-#' `Genre` genus of the individual mosquito
+#' `Genre` genus of the individual mosquito (default "Anopheles")
 #' @param v_hours a vector of sarting hours of collection i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning
 #' @param genre the value (string) of the genus for which counts have to be computed (from factors in the `Genre` column, default : "Anopheles")
 #' @keywords
@@ -29,7 +29,6 @@
 
 
 Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
-	require(reshape2)
 	require(dplyr)
 	data$site <- as.factor(paste(data$PosteDeCapture, data$PointDeCapture))
 	Sub_Entomo_PHP <- subset(data, Genre == genre)						# to modify according to what is wanted (one specific species during one survey for example)
@@ -37,7 +36,11 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 
 
 	# Reshape dataframe
-	Data_Entomo <- dcast(Sub_Entomo_PHP, CodeVillage + HeureDeCapture + NumMission ~ site)   ####### to modify if a new column of count is added in the new version of the PHP app ########
+	Data_Entomo <- Sub_Entomo_PHP %>%
+									group_by(CodeVillage, HeureDeCapture, NumMission, site) %>%
+									summarise(count = n()) %>%
+									spread(site, count, fill=0)   ####### to modify if a new column of count is added in the new version of the PHP app ########
+
 	colnames(Data_Entomo) <- c("Vil", "HeureDeCapture", "Enq", "O1", "O2","O3","O4","I1","I2","I3","I4") # rename columns
 
 	# Create rows for hours with zero vectors collected
