@@ -20,7 +20,8 @@
 #' @examples
 #' Count_HB <- HB_to_counts(ODK_HB_R)
 #' Count_HB$Enq <- 1
-#' Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP)
+#' v_hours <- c(15:23,0:11)
+#' Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP, v_hours)
 #' exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 #'
 exposure_dat <- function(Count_HB, Count_ento, p = 0.92){
