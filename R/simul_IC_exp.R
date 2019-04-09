@@ -41,25 +41,19 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 
 				for (t in 1:nrow(Subset)){
 
-					Ni<-Subset[t,"Ni"]
+					Ni<-Subset[t,"Ni"]        #### tout récuperer dans un vecteur
 					No<-Subset[t,"No"]
-					fi1<-Subset[t,"I1"]
-					fi2<-Subset[t,"I2"]
-					fi3<-Subset[t,"I3"]
-					fi4<-Subset[t,"I4"]
-					fo1<-Subset[t,"O1"]
-					fo2<-Subset[t,"O2"]
-					fo3<-Subset[t,"O3"]
-					fo4<-Subset[t,"O4"]
+					fi <- Subset[t,] %>% select(.,contains("int"))
+					fo <- Subset[t,] %>% select(.,contains("ext"))
 					h<-Subset[t,"d"]
 					ui<-round(Subset[t,"U_indoors"],0)
 					uo<-round(Subset[t,"U_outdoors"],0)
 					un<-round(Subset[t,"U_nets"],0)
 
-					hi <- sum(!is.na(c(fi1,fi2,fi3,fi4))) * ndays			# duration (in hours) of effective collection indoor (max 4 collection points)
-					ho <- sum(!is.na(c(fo1,fo2,fo3,fo4))) * ndays			# duration (in hours) of effective collection outdoor
-					Ni <- sum(fi1,fi2,fi3,fi4)
-					No <- sum(fo1,fo2,fo3,fo4)
+					hi <- sum(!is.na(fi)) * ndays			# duration (in hours) of effective collection indoor (max 4 collection points)
+					ho <- sum(!is.na(fo)) * ndays			# duration (in hours) of effective collection outdoor
+					Ni <- sum(fi)
+					No <- sum(fo)
 
 					bi=rpois(nsim, lambda=Ni)/hi 			# simulate nsim values of densities indoors according to a poisson distribution of counts
 					bo=rpois(nsim, lambda=No)/ho 			# simulate nsim values of densities outdoors according to a poisson distribution of counts
