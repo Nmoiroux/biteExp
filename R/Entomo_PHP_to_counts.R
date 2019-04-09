@@ -29,8 +29,8 @@
 
 
 Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
-	require(dplyr)
-	data$site <- as.factor(paste(data$PosteDeCapture, data$PointDeCapture))
+	require(tidyverse)
+	data$site <- as.factor(paste0(data$PosteDeCapture, data$PointDeCapture))
 	Sub_Entomo_PHP <- subset(data, Genre == genre)						# to modify according to what is wanted (one specific species during one survey for example)
 
 
@@ -41,7 +41,7 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 									summarise(count = n()) %>%
 									spread(site, count, fill=0)   ####### to modify if a new column of count is added in the new version of the PHP app ########
 
-	colnames(Data_Entomo) <- c("Vil", "HeureDeCapture", "Enq", "O1", "O2","O3","O4","I1","I2","I3","I4") # rename columns
+	colnames(Data_Entomo)[1:3] <- c("Vil", "HeureDeCapture", "Enq") # rename columns
 
 	# Create rows for hours with zero vectors collected
 	v_entomo <- levels(Data_Entomo$Vil)
@@ -51,9 +51,11 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 	Data_Entomo[is.na(Data_Entomo)] <- 0																				 							# Replace NAs by zeros
 
 	# Calculate sums vectors collected indoors (Ni) and outdoors (No)
-	Data_Entomo$No <- rowSums(subset(Data_Entomo, select = c(O1,O2,O3,O4)))
-	Data_Entomo$Ni <- rowSums(subset(Data_Entomo, select = c(I1,I2,I3,I4)))
-	Data_Entomo$d <- 4																	# duration of collection indoors per time interval (4 sites x 1 hours)
+	Data_Entomo <- Data_Entomo %>% mutate(No = select(., contains("ext")) %>% rowSums())
+	Data_Entomo <- Data_Entomo %>% mutate(Ni = select(., contains("int")) %>% rowSums())
+
+	Data_Entomo$di <- str_detect(colnames(Data_Entomo), "int") %>% which(TRUE) %>% length()	# duration of collection indoors per time interval (nb of sites x 1 hours)
+	Data_Entomo$do <- str_detect(colnames(Data_Entomo), "ext") %>% which(TRUE) %>% length()	# duration of collection outdoors per time interval (nb of sites x 1 hours)
 
 	# Create column t (hours in the same referential than human behavio data with 12h = 0, 00H = 12 etc..)
 	# function to convert hours of collection in a new referential with 12h = 0 and 00h = 12
