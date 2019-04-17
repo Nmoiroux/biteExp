@@ -28,8 +28,8 @@ HB_to_counts <- function(data = data){
 
 	# faire des statistiques (somme d'individus dans chaque classe d'âge) par village
 	ODK_HB_R_Village <-  unique(data[,c("rcpcodevillage", "rcpcodemenage", "rcpnbrenfant1", "rcpnbrenfant2", "rcpnbradulte")]) %>%
-												group_by(rcpcodevillage) %>%
-												summarise_at(c("rcpnbrenfant1","rcpnbrenfant2","rcpnbradulte"),sum)
+												dplyr::group_by(rcpcodevillage) %>%
+												dplyr::summarise_at(c("rcpnbrenfant1","rcpnbrenfant2","rcpnbradulte"),sum)
 	colnames(ODK_HB_R_Village)[2:4] <- c("Total_0_5", "Total_6_17", "Total_Ad")
 
 	# extraire les proportion de chaque classe d'âge par villages
