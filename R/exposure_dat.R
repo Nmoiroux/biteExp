@@ -25,9 +25,8 @@
 #' exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 #'
 exposure_dat <- function(Count_HB, Count_ento, p = 0.92){
-	require(dplyr)
 
-	Exposure <- left_join(Count_HB, Count_ento, by=c('Vil','Enq','t'))		# join the table Count_HB and Count_ento based on Vil, Enq and t
+	Exposure <- dplyr::left_join(Count_HB, Count_ento, by=c('Vil','Enq','t'))		# join the table Count_HB and Count_ento based on Vil, Enq and t
 
 	Exposure$pui <- round(Exposure$U_indoors/Exposure$N_User, 10)		# proportion of LLIN user being indoor (rounded to deal with small neagtive value of U_outdoors)
 	Exposure$puo <- round(Exposure$U_outdoors/Exposure$N_User, 10)		# proportion of LLIN user being outdoor
