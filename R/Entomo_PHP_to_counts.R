@@ -29,7 +29,7 @@
 
 
 Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
-	require(tidyverse)
+
 	data$site <- as.factor(paste0(data$PosteDeCapture, data$PointDeCapture))
 	Sub_Entomo_PHP <- subset(data, Genre == genre)						# to modify according to what is wanted (one specific species during one survey for example)
 
@@ -37,9 +37,9 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 
 	# Reshape dataframe
 	Data_Entomo <- Sub_Entomo_PHP %>%
-									group_by(CodeVillage, HeureDeCapture, NumMission, site) %>%
-									summarise(count = n()) %>%
-									spread(site, count, fill=0)   ####### to modify if a new column of count is added in the new version of the PHP app ########
+									dplyr::group_by(CodeVillage, HeureDeCapture, NumMission, site) %>%
+									dplyr::summarise(count = dplyr::n()) %>%
+									tidyr::spread(site, count, fill=0)   ####### to modify if a new column of count is added in the new version of the PHP app ########
 
 	colnames(Data_Entomo)[1:3] <- c("Vil", "HeureDeCapture", "Enq") # rename columns
 
@@ -47,15 +47,15 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 	v_entomo <- levels(Data_Entomo$Vil)
 	e_entomo <- unique(Data_Entomo$Enq)
 	collect_times <- expand.grid(Vil = v_entomo , HeureDeCapture = v_hours, Enq = e_entomo) 	# Create table with all possible values of Vil, HeureDecapture and Enq
-	Data_Entomo <- left_join(collect_times, Data_Entomo, by=c('Vil','Enq','HeureDeCapture'))	# join data to Data_Entomo
+	Data_Entomo <- dplyr::left_join(collect_times, Data_Entomo, by=c('Vil','Enq','HeureDeCapture'))	# join data to Data_Entomo
 	Data_Entomo[is.na(Data_Entomo)] <- 0																				 							# Replace NAs by zeros
 
 	# Calculate sums vectors collected indoors (Ni) and outdoors (No)
-	Data_Entomo <- Data_Entomo %>% mutate(No = select(., contains("ext")) %>% rowSums())
-	Data_Entomo <- Data_Entomo %>% mutate(Ni = select(., contains("int")) %>% rowSums())
+	Data_Entomo <- Data_Entomo %>% dplyr::mutate(No = dplyr::select(., dplyr::contains("ext")) %>% rowSums())
+	Data_Entomo <- Data_Entomo %>% dplyr::mutate(Ni = dplyr::select(., dplyr::contains("int")) %>% rowSums())
 
-	Data_Entomo$di <- str_detect(colnames(Data_Entomo), "int") %>% which(TRUE) %>% length()	# duration of collection indoors per time interval (nb of sites x 1 hours)
-	Data_Entomo$do <- str_detect(colnames(Data_Entomo), "ext") %>% which(TRUE) %>% length()	# duration of collection outdoors per time interval (nb of sites x 1 hours)
+	Data_Entomo$di <- stringr::str_detect(colnames(Data_Entomo), "int") %>% which(TRUE) %>% length()	# duration of collection indoors per time interval (nb of sites x 1 hours)
+	Data_Entomo$do <- stringr::str_detect(colnames(Data_Entomo), "ext") %>% which(TRUE) %>% length()	# duration of collection outdoors per time interval (nb of sites x 1 hours)
 
 	# Create column t (hours in the same referential than human behavio data with 12h = 0, 00H = 12 etc..)
 	# function to convert hours of collection in a new referential with 12h = 0 and 00h = 12
