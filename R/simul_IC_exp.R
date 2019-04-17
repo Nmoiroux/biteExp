@@ -43,8 +43,8 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 
 					Ni<-Subset[t,"Ni"]        #### tout récuperer dans un vecteur
 					No<-Subset[t,"No"]
-					fi <- Subset[t,] %>% select(.,contains("int"))
-					fo <- Subset[t,] %>% select(.,contains("ext"))
+					fi <- Subset[t,] %>% dplyr::select(.,dplyr::contains("int"))
+					fo <- Subset[t,] %>% dplyr::select(.,dplyr::contains("ext"))
 					h<-Subset[t,"d"]
 					ui<-round(Subset[t,"U_indoors"],0)
 					uo<-round(Subset[t,"U_outdoors"],0)
@@ -55,8 +55,8 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 					Ni <- sum(fi)
 					No <- sum(fo)
 
-					bi=rpois(nsim, lambda=Ni)/hi 			# simulate nsim values of densities indoors according to a poisson distribution of counts
-					bo=rpois(nsim, lambda=No)/ho 			# simulate nsim values of densities outdoors according to a poisson distribution of counts
+					bi=stats::rpois(nsim, lambda=Ni)/hi 			# simulate nsim values of densities indoors according to a poisson distribution of counts
+					bo=stats::rpois(nsim, lambda=No)/ho 			# simulate nsim values of densities outdoors according to a poisson distribution of counts
 
 					#--------------------------------------------------------
 					usize<-ui+uo+un 			# number of users
@@ -65,7 +65,7 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 					puo<-uo/usize 			# proportion users outdoors
 					pun<-un/usize 			# proportion users under net
 
-					sp<-rmultinom(nsim, size = usize, prob = c(pui,puo,pun)) / usize # simulate nsim values of proportions according to a multinomial distribution of proportions
+					sp<-stats::rmultinom(nsim, size = usize, prob = c(pui,puo,pun)) / usize # simulate nsim values of proportions according to a multinomial distribution of proportions
 
 					eui<-bi*t(sp)[,1] 	# hourly exposure calculations
 					euo<-bo*t(sp)[,2]
@@ -131,8 +131,8 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 														 mean = NA, lo95 = NA, hi95 = NA)
 
 				ResMCI$mean <- sapply(as.character(ResMCI$var_exp), function(x) mean(eval(parse(text = x)),na.rm = TRUE))
-				ResMCI$lo95 <- sapply(as.character(ResMCI$var_exp), function(x) quantile(eval(parse(text = x)),0.025,na.rm = TRUE))
-				ResMCI$hi95 <- sapply(as.character(ResMCI$var_exp), function(x) quantile(eval(parse(text = x)),0.975,na.rm = TRUE))
+				ResMCI$lo95 <- sapply(as.character(ResMCI$var_exp), function(x) stats::quantile(eval(parse(text = x)),0.025,na.rm = TRUE))
+				ResMCI$hi95 <- sapply(as.character(ResMCI$var_exp), function(x) stats::quantile(eval(parse(text = x)),0.975,na.rm = TRUE))
 
 				if (i==1){
 					Results <- ResMCI
