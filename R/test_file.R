@@ -33,4 +33,4 @@ exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 
 Exposure <- exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 plot_exposure(Exposure, vil= "DOG", age = "pop")
-
+library(roxygen2)
