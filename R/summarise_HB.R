@@ -2,10 +2,6 @@
 ## works with several places (villages) and age classes but for only one survey
 ## compute stats for the overall population based on the recorded number of peoples censored in the household
 
-# from the output of the ODK app :
-# spaces in col 'rcpnomprenomrepdt' should be replaced by underscore '_' previously or removed using the read.table function
-# see file 'Hum_Behav_PANIC.txt' for the correct structure
-
 
 
 #' Count individuals in different states (indoors, outdoors, sleeping) for both user and non-users of nets at each hour (from 0h to 23h)
@@ -30,10 +26,10 @@ summarise_HB <- function(data){
 	require(lubridate)
 
 	# Convert hours in HH:MM:SS format to decimal days (0 to 1 with 0h = 0, 12h = 0.5 and 24h = 1)
-	data$hintmaison <- as.numeric(as.duration(hms(data$hintmaison)), "days")
-	data$hcoucher <- as.numeric(as.duration(hms(data$hcoucher)), "days")
-	data$hlever <- as.numeric(as.duration(hms(data$hlever)), "days")
-	data$hsortiemaison <- as.numeric(as.duration(hms(data$hsortiemaison)), "days")
+	data$hintmaison <- as.numeric(lubridate::as.duration(lubridate::hms(data$hintmaison)), "days")
+	data$hcoucher <- as.numeric(lubridate::as.duration(lubridate::hms(data$hcoucher)), "days")
+	data$hlever <- as.numeric(lubridate::as.duration(lubridate::hms(data$hlever)), "days")
+	data$hsortiemaison <- as.numeric(lubridate::as.duration(lubridate::hms(data$hsortiemaison)), "days")
 
 	# change the referential of hours (from 0h to 12h, i.e, in the new referential: 12h = 0 and 0h = 0.5)
 	data$HIn <- c()					# new column for hour of going indoor
