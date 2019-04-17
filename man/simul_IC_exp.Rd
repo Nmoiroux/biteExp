@@ -33,3 +33,11 @@ a dataframe with 7 columns :
 \description{
 Calculates exposure indices and simulates confidence intervals based on bootstraping methods
 }
+\examples{
+Count_HB <- HB_to_counts(ODK_HB_R)
+Count_HB$Enq <- 1
+Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP)
+Exposure <- exposure_dat(Count_HB, Data_Entomo, p = 0.92)
+exp_CI <- simul_IC_exp(Exposure, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM = 18)
+
+}

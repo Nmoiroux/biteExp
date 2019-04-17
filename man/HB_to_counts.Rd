@@ -9,15 +9,12 @@ Also counts number of user outdoors and user indoors but not under net}
 HB_to_counts(data = data)
 }
 \arguments{
-\item{data}{a data frame of individual behavior data with the following fields with these seven first column (order doesnt matter):
+\item{data}{a data frame of individual behavior data with the following fields (order doesnt matter):
 `rcpcodevillage`    village code (factor)
-`rcpdateenquete` survey date
 `rcpcodemenage`    household code
-`rcpnomprenomrepdt` household respondent
 `rcpnbrenfant1`     nb of children (0-6y) in the household
 `rcpnbrenfant2`    nb of children (6-18y) in the household
 `rcpnbradulte`            nb of adults in the household
-followed by these columns (order doesnt matter):
 `rcptrcheage` individual age classes (factor)
 `sexe` sexe of the individual (f or m)
 `age` age in years of the individual

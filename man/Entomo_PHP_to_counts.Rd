@@ -13,9 +13,9 @@ Entomo_PHP_to_counts(data, v_hours, genre = "Anopheles")
 `PointDeCapture` collection site (i.e place where collection have been performed both indoors and outdoors) value : 1 to 4
 `PosteDeCapture` collection point (indoors or oudoors), value = int or ext
 `HeureDeCapture` beginning of the collection hours : passible values : 0 to 23
-`Genre` genus of the individual mosquito}
+`Genre` genus of the individual mosquito (default "Anopheles")}
 
-\item{v_hours}{a vector of collection hours beginning i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning}
+\item{v_hours}{a vector of sarting hours of collection i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning}
 
 \item{genre}{the value (string) of the genus for which counts have to be computed (from factors in the `Genre` column, default : "Anopheles")}
 }

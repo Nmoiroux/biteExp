@@ -32,8 +32,9 @@ and with `daily_exp_stat` and `simul_IC_exp` to calculate daily statistics of ex
 }
 \examples{
 Count_HB <- HB_to_counts(ODK_HB_R)
-Count_HB$Enq <- 1
-Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP)
+Count_HB$Enq <- 3
+v_hours <- c(15:23,0:11)
+Data_Entomo <- Entomo_PHP_to_counts(Entomo_PHP, v_hours)
 exposure_dat(Count_HB, Data_Entomo, p = 0.92)
 
 }
