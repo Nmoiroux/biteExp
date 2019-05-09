@@ -88,6 +88,6 @@ HB_to_counts <- function(data = data){
 	Count_HB$U_indoors <- Count_HB$N_User - Count_HB$U_outdoors - Count_HB$U_nets		# N user indoor but not under an LLIN
 	# convert t into the good referential
 	Count_HB$t <- Count_HB$t - 1
-	#'Count_HB' is used in the code 'Exposure_calc_graph' that calculate exposure value and produce graph of exposure to bite
+
 	return(Count_HB)
 }
