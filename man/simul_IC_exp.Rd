@@ -12,13 +12,13 @@ simul_IC_exp(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10,
 
 \item{p}{the personal protection provided by an LLIN (default = 0.92 for Permanet 2 according to Corbel et al. 2010)}
 
-\item{ndays}{duration (in days) of collection during each survey (default = 1)}
+\item{ndays}{duration (in days) of collection during each survey in each collection point (default = 1)}
 
 \item{nsim}{number of simulations (default = 5000)}
 
-\item{tE}{upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 correspond to 22h)}
+\item{tE}{upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 corresponds to 22h)}
 
-\item{tM}{lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 correspond to 6h)}
+\item{tM}{lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 corresponds to 6h)}
 }
 \value{
 a dataframe with 7 columns :

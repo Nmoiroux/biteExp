@@ -26,3 +26,7 @@ a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2"
 \description{
 convert data from individual mosquitoes collection dataframe to counts of individuals per collection sites (giving 8 collections sites per place, 4 indoors, 4 outdoors)
 }
+\examples{
+v_hours <- c(15:23,0:11)
+Entomo_PHP_to_counts(Entomo_PHP, v_hours)
+}

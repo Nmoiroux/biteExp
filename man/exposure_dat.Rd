@@ -20,10 +20,10 @@ a dataframe joining Count_HB and COunt_ento plus the following calculmated field
 `pui`` proportion of LLIN user being indoor (rounded to deal with small neagtive value of U_outdoors)
 `puo` proportion of LLIN user being outdoor
 `pup` proportion of LLIN user being to bed and protected by a LLIN
-`eui` user exposuExposure indoor
-`euo` user exposuExposure outdoor
-`eun` user exposuExposure under an LLIN
-`eup` user exposure prevented by LLIN
+`eui` user exposure indoor
+`euo` user exposure outdoor
+`eun` user exposure under an LLIN
+`eup` user exposure indoor prevented by LLIN
 }
 \description{
 Calculate hourly exposure to bite indices based on human and vector behaviors data

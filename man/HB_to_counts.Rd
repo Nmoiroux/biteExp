@@ -30,3 +30,6 @@ a data frame of counts of individuals in various compartment per hours according
 \description{
 `HB_to_counts` returns hourly counts of individual humans in each compartiments (indoor, outdoors, under nets) from a data frame specifying (see MOIROUX et al. 2014)
 }
+\examples{
+HB_to_counts(ODK_HB_R)
+}
