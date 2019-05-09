@@ -12,10 +12,10 @@
 #' `pui`` proportion of LLIN user being indoor (rounded to deal with small neagtive value of U_outdoors)
 #' `puo` proportion of LLIN user being outdoor
 #' `pup` proportion of LLIN user being to bed and protected by a LLIN
-#' `eui` user exposuExposure indoor
-#' `euo` user exposuExposure outdoor
-#' `eun` user exposuExposure under an LLIN
-#' `eup` user exposure prevented by LLIN
+#' `eui` user exposure indoor
+#' `euo` user exposure outdoor
+#' `eun` user exposure under an LLIN
+#' `eup` user exposure indoor prevented by LLIN
 #' @export
 #' @examples
 #' Count_HB <- HB_to_counts(ODK_HB_R)
@@ -35,7 +35,7 @@ exposure_dat <- function(Count_HB, Count_ento, p = 0.92){
 	Exposure$eui<-Exposure$Ni/Exposure$di*Exposure$pui			# user Exposure indoor (Bi,t*(It-St))
 	Exposure$euo<-Exposure$No/Exposure$do*Exposure$puo			# user Exposure outdoor (Bo,t*(1-It))
 	Exposure$eun<-Exposure$Ni/Exposure$di*Exposure$pup*(1-p)		# user Exposure under an LLIN (Bi,t*St*(1-P))
-	Exposure$eup<-Exposure$Ni/Exposure$di*Exposure$pup*p			# user exposure prevented by LLIN (Bi,t*St*P)
+	Exposure$eup<-Exposure$Ni/Exposure$di*Exposure$pup*p			# user exposure indoor prevented by LLIN (Bi,t*St*P)
 
 	return(Exposure)
 }
