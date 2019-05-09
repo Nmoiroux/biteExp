@@ -18,11 +18,11 @@
 #'
 daily_exp_stat <- function(DataExp, tE = 10, tM = 18){
 
-	expE <- Exposure %>% dplyr::filter(t < 10)										# select row only for hour before 22h (for evening exposure)
-	expM <- Exposure %>% dplyr::filter(t >= 18)									# select row only for hour after 6h (for morning exposure)
+	expE <- DataExp %>% dplyr::filter(t < 10)										# select row only for hour before 22h (for evening exposure)
+	expM <- DataExp %>% dplyr::filter(t >= 18)									# select row only for hour after 6h (for morning exposure)
 
 	# sum hourly exposure (total, evening and morning)
-	sumExp <- Exposure %>% dplyr::group_by(Vil, Enq, Age) %>% dplyr::summarise_at(c("eui","euo","eun","eup"),sum, na.rm=T) # daily sums
+	sumExp <- DataExp %>% dplyr::group_by(Vil, Enq, Age) %>% dplyr::summarise_at(c("eui","euo","eun","eup"),sum, na.rm=T) # daily sums
 	names(sumExp)[-c(1:3)] <- paste0("S",names(sumExp)[-c(1:3)])				# rename variables
 	sumExpE <- expE %>% dplyr::group_by(Vil, Enq, Age) %>% dplyr::summarise_at(c("eui","euo","eun","eup"),sum, na.rm=T)
 	names(sumExpE)[-c(1:3)] <- paste0("S",names(sumExpE)[-c(1:3)],"E")				# rename variables
