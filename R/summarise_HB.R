@@ -44,12 +44,12 @@ summarise_HB <- function(data){
 		if (data$hsortiemaison[i] > 0.5) {data$HExt[i] <- data$hsortiemaison[i] - 0.5} else {data$HExt[i] <- data$hsortiemaison[i] + 0.5}
 	}
 
-	N_Ind <- rep(nrow(data), 24)									# vector of hourly Number of individuals
+	N_Ind <- rep(nrow(data), 24)						# vector of hourly Number of individuals
 	N_User <-  rep(length(which(data$dormirssmoust == "oui" )), 24)	# vector of hourly Number of individuals having used an LLIN
 	N_In <- c()															# vector of hourly number of people being indoor
-	N_Sleep <- c()														# vector of hourly number of people being asleep
+	N_Sleep <- c()													# vector of hourly number of people being asleep
 	N_Mild <- c()														# vector of hourly number of people being asleep AND under an LLIN
-	N_User_In <- c()													# vector of hourly number of LLIN user being indoor
+	N_User_In <- c()												# vector of hourly number of LLIN user being indoor
 
 	for (i in 0:23){					# 5 correspond à 17h dans le nouveau ref. et 20 correspond à 8h
 		N_In[i+1] <- length(which(data$HIn < (i+1)/24 & data$HExt > (i+1)/24))   # pour être à l'intérieur, il faut être entré avant la fin de la tranche horaire (i+1) et sorti après
