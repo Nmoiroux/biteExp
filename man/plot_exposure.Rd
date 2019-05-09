@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot_exposure}
 \alias{plot_exposure}
-\title{making multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)}
+\title{makes multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)}
 \usage{
 plot_exposure(Exposure, vil, age = "pop")
 }
@@ -17,7 +17,7 @@ plot_exposure(Exposure, vil, age = "pop")
 a ggplot object
 }
 \description{
-making multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)
+makes multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)
 }
 \examples{
 Count_HB <- HB_to_counts(ODK_HB_R)
