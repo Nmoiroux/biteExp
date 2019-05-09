@@ -5,10 +5,10 @@
 #'
 #' @param DataExp a dataframe obtained by the use of function `exposure_dat`
 #' @param p the personal protection provided by an LLIN (default = 0.92 for Permanet 2 according to Corbel et al. 2010)
-#' @param ndays duration (in days) of collection during each survey (default = 1)
+#' @param ndays duration (in days) of collection during each survey in each collection point (default = 1)
 #' @param nsim number of simulations (default = 5000)
-#' @param tE upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 correspond to 22h)
-#' @param tM lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 correspond to 6h)
+#' @param tE upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 corresponds to 22h)
+#' @param tM lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 corresponds to 6h)
 #'
 #' @return a dataframe with 7 columns :
 #' "Vil"     village code (factor)
@@ -55,8 +55,8 @@ simul_IC_exp <- function(DataExp, p = 0.92, ndays = 1, nsim = 5000, tE = 10, tM 
 					Ni <- sum(fi)
 					No <- sum(fo)
 
-					bi=stats::rpois(nsim, lambda=Ni)/hi 			# simulate nsim values of densities indoors according to a poisson distribution of counts
-					bo=stats::rpois(nsim, lambda=No)/ho 			# simulate nsim values of densities outdoors according to a poisson distribution of counts
+					bi=stats::rpois(nsim, lambda=Ni)/hi 		# simulate nsim values of densities indoors according to a poisson distribution of counts
+					bo=stats::rpois(nsim, lambda=No)/ho 		# simulate nsim values of densities outdoors according to a poisson distribution of counts
 
 					#--------------------------------------------------------
 					usize<-ui+uo+un 			# number of users
