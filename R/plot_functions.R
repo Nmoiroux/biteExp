@@ -1,6 +1,6 @@
 #### making graph of exposure to bite
 
-#' making multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)
+#' makes multi panel plot of exposure to bite (one panel per entomological survey for one village and one age classes)
 #'
 #' @param Exposure a dataframe obtained by the use of function `exposure_dat`
 #' @param vil one village code (string) from Exposure$Vil
@@ -41,6 +41,16 @@ plot_exposure <- function(Exposure, vil, age = "pop"){
 
 ###### making graph of human and vector behaviors
 
+#' plot human and vector behavior on the same graph (multi-panel plot, one plot per survey)
+#'
+#' @param Exposure
+#' @param vil
+#' @param age
+#'
+#' @return
+#' @export
+#'
+#' @examples
 plot_behaviors <- function(Exposure, vil, age = "pop"){
 
 	sub_Exposure_graph <- subset(Exposure, Vil == vil & Age == age)		#subset for one village and one category of age
@@ -73,6 +83,17 @@ plot_behaviors <- function(Exposure, vil, age = "pop"){
 
 }
 
+#' multi panel plot (per age classes) of human behavior
+#'
+#' @param Exposure
+#' @param vil
+#' @param enq
+#' @param nc
+#'
+#' @return
+#' @export
+#'
+#' @examples
 plot_behavior_H <- function(Exposure, vil = c("DOG"), enq = 1, nc = 6){
 
 	sub_Exposure_graph <- subset(Exposure, Vil %in% vil & !(Age %in% c("pop","all")) & Enq == enq)		#subset for one village and one category of age
