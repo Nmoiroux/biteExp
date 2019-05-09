@@ -64,7 +64,7 @@ plot_behaviors <- function(Exposure, vil, age = "pop"){
 	sub_Exposure_graph$ma_in <- with(sub_Exposure_graph,Ni/d)/mamax
 	sub_Exposure_graph$ma_ou <- with(sub_Exposure_graph,No/d)/mamax
 
-	data_graph <- sub_Exposure_graph %>% tidyr::gather("people","value",33:34)
+	data_graph <- sub_Exposure_graph %>% tidyr::gather("people","value",c("pNet", "pIn"))
 	data_graph$people <- as.factor(data_graph$people)
 
 
@@ -102,7 +102,7 @@ plot_behavior_H <- function(Exposure, vil = c("DOG"), enq = 1, nc = 6){
 	sub_Exposure_graph$pNet <- sub_Exposure_graph$U_nets / sub_Exposure_graph$N_Ind
 	sub_Exposure_graph$pIn <- sub_Exposure_graph$N_In / sub_Exposure_graph$N_Ind - (sub_Exposure_graph$pNet)
 
-	data_graph <- sub_Exposure_graph %>% tidyr::gather("people","value",33:34)
+	data_graph <- sub_Exposure_graph %>% tidyr::gather("people","value",c("pNet", "pIn"))
 	data_graph$people <- as.factor(data_graph$people)
 
 
