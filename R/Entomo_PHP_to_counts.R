@@ -57,13 +57,13 @@ Entomo_PHP_to_counts <- function(data, v_hours, genre = "Anopheles"){
 	Data_Entomo$di <- stringr::str_detect(colnames(Data_Entomo), "int") %>% which(TRUE) %>% length()	# duration of collection indoors per time interval (nb of sites x 1 hours)
 	Data_Entomo$do <- stringr::str_detect(colnames(Data_Entomo), "ext") %>% which(TRUE) %>% length()	# duration of collection outdoors per time interval (nb of sites x 1 hours)
 
-	# Create column t (hours in the same referential than human behavio data with 12h = 0, 00H = 12 etc..)
+	# Create column t (hours in the same referential than human behavior data with 12h = 0, 00H = 12 etc..)
 	# function to convert hours of collection in a new referential with 12h = 0 and 00h = 12
 	hour_to_n <- function(x){
 		if (x > 12) {n <- x - 12} else {n <- x + 12 }
 	}
 	Data_Entomo$t <- sapply(Data_Entomo$HeureDeCapture,hour_to_n)
 	##### END #############
-	#'Data_Entomo' is used in the code 'Exposure_calc_graph' that calculate exposure value and produce graph of exposure to bite
+
 	return(Data_Entomo)
 }
