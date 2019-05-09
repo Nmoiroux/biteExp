@@ -41,7 +41,7 @@ plot_exposure <- function(Exposure, vil, age = "pop"){
 
 ###### making graph of human and vector behaviors
 
-plot_behaviors <- function(Exposure, vil, age){
+plot_behaviors <- function(Exposure, vil, age = "pop"){
 
 	sub_Exposure_graph <- subset(Exposure, Vil == vil & Age == age)		#subset for one village and one category of age
 	sub_Exposure_graph$t2 <- sub_Exposure_graph$t+0.5									#add 0.5 to the time to plot value of exposure at the center of a period of one hour
