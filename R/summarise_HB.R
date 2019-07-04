@@ -23,7 +23,6 @@
 #' summarise_HB(subset_hb)
 
 summarise_HB <- function(data){
-	require(lubridate)
 
 	# Convert hours in HH:MM:SS format to decimal days (0 to 1 with 0h = 0, 12h = 0.5 and 24h = 1)
 	data$hintmaison <- as.numeric(lubridate::as.duration(lubridate::hms(data$hintmaison)), "days")
