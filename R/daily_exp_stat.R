@@ -28,15 +28,22 @@ daily_exp_stat <- function(DataExp, tE = 10, tM = 18){
 	names(sumExpE)[-c(1:3)] <- paste0("S",names(sumExpE)[-c(1:3)],"E")				# rename variables
 	sumExpM <- expM %>% dplyr::group_by(Vil, Enq, Age) %>% dplyr::summarise_at(c("eui","euo","eun","eup"),sum, na.rm=T)
 	names(sumExpM)[-c(1:3)] <- paste0("S",names(sumExpM)[-c(1:3)],"M")				# rename variables
-	sumExp <- dplyr::bind_cols(sumExp,sumExpE[,-c(1:3)],sumExpM[,-c(1:3)])								# groups all data in one table
+	useRate <- DataExp %>% dplyr::group_by(Vil, Enq, Age) %>% dplyr::summarise(N_Ind = first(N_Ind), N_User = first(N_User))
+
+
+	sumExp <- dplyr::bind_cols(sumExp,sumExpE[,-c(1:3)],sumExpM[,-c(1:3)], useRate[,-c(1:3)])								# groups all data in one table
 
 	sumExp$PeuE <- 	with(sumExp,(SeuiE+SeuoE+SeunE)/(Seui+Seuo+Seun))						# Proportion of exposure in the Evening for users
 	sumExp$PenuE <- with(sumExp,(SeuiE+SeuoE+SeunE+SeupE)/(Seui+Seuo+Seun+Seup))			# Proportion of exposure in the Evening for non users
 	sumExp$PeuM <- with(sumExp,(SeuiM+SeuoM+SeunM)/(Seui+Seuo+Seun))						# Proportion of exposure in the Morning for users
 	sumExp$PenuM <- with(sumExp,(SeuiM+SeuoM+SeunM+SeupM)/(Seui+Seuo+Seun+Seup))			# Proportion of exposure in the Morning for non users
-	sumExp$Peui <- with(sumExp,(Seui+Seun)/(Seui+Seun+Seuo))								# Proportion of exposure indoor for user
+	sumExp$Peui <- with(sumExp,(Seui+Seun)/(Seui+Seun+Seuo))											# Proportion of exposure indoor for user
 	sumExp$Penui <- with(sumExp,(Seui+Seun+Seup)/(Seui+Seun+Seuo+Seup))						# Proportion of exposure indoor for non user
 	sumExp$Eff <- with(sumExp,1-((Seui+Seun+Seuo)/(Seui+Seun+Seuo+Seup)))					# True protective efficacy (P*)
+	sumExp$useRate <- with(sumExp,N_User/N_Ind)																		# use Rate of LLINs
+
+
+
 
 	return(sumExp)
 }
