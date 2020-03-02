@@ -3,10 +3,35 @@
 #' Title
 #'
 #' @param DataExp a dataframe obtained by the use of function `exposure_dat`
-#' @param tE upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 correspond to 22h)
-#' @param tM lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 correspond to 6h)
+#' @param tE upper limit hour for evening exposure calculation, in a referential with 12h as origin (i.e 10 corresponds to 22h)
+#' @param tM lower limit hour for morning exposure calculation, in a referential with 12h as origin (i.e 18 corresponds to 6h)
 #'
-#' @return
+#' @return a dataframe with 25 columns :
+#' `Vil` village / place id
+#' `Enq` survey number
+#' `Age` age classe
+#' `Seui` daily exposure indoor for user
+#' `Seuo` daily exposure outdoor for user
+#' `Seun` daily exposure under net for user
+#' `Seup` exposure prevented daily by using of nets
+#' `SeuiE` daily exposure indoor in the Evening for user
+#' `SeuoE` daily exposure outdoor in the Evening for user
+#' `SeunE` daily exposure under net in the Evening for user
+#' `SeupE` exposure prevented daily by using of nets in the Evening
+#' `SeuiM` daily exposure indoor in the Morning for user
+#' `SeuoM` daily exposure outdoor in the Morning for user
+#' `SeunM` daily exposure under net in the Morning for user
+#' `SeupM` exposure prevented daily by using of nets in the Morning
+#' `N_Ind` number of individual surveyed
+#' `N_User` number of individual using nets
+#' `PeuE` Proportion of exposure in the Evening for users
+#' `PenuE`Proportion of exposure in the Evening for non users
+#' `PeuM` Proportion of exposure in the Morning for users
+#' `PenuM` Proportion of exposure in the Morning for non users
+#' `Peui` Proportion of exposure indoor for user
+#' `Penui`Proportion of exposure indoor for non user
+#' `Eff` True protective efficacy (P*)
+#' `useRate` use Rate of LLINs
 #' @export
 #'
 #' @examples

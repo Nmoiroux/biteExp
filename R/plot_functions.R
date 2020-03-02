@@ -43,11 +43,11 @@ plot_exposure <- function(Exposure, vil, age = "pop"){
 
 #' plot human and vector behavior on the same graph (multi-panel plot, one plot per survey)
 #'
-#' @param Exposure
-#' @param vil
-#' @param age
+#' @param Exposure a dataframe obtained by the use of function `exposure_dat`
+#' @param vil one village code (string) from Exposure$Vil
+#' @param age one age classes (string) from Exposure$Age
 #'
-#' @return
+#' @return a ggplot object
 #' @export
 #'
 #' @examples
@@ -68,7 +68,7 @@ plot_behaviors <- function(Exposure, vil, age = "pop"){
 	data_graph$people <- as.factor(data_graph$people)
 
 
-	ggplot2::ggplot(data_graph, ggplot2::aes(x=t2, y=value, fill=people)) +
+	plot <- ggplot2::ggplot(data_graph, ggplot2::aes(x=t2, y=value, fill=people)) +
 		ggplot2::geom_area(colour="grey", size=.3, alpha=.4) +
 		ggplot2::scale_fill_brewer(palette="Greens", breaks=rev(levels(data_graph$people))) +
 		ggplot2::facet_wrap(~Enq) +
@@ -81,16 +81,17 @@ plot_behaviors <- function(Exposure, vil, age = "pop"){
 		ggplot2::labs(linetype = 'anopheles') +
 		ggplot2::scale_x_continuous(breaks =  c(5,10,15,20),labels=c("17","22","3","8"))
 
+	return(plot)
 }
 
 #' multi panel plot (per age classes) of human behavior
 #'
-#' @param Exposure
-#' @param vil
-#' @param enq
-#' @param nc
+#' @param Exposure a dataframe obtained by the use of function `exposure_dat`
+#' @param vil a string vector of village id from Exposure$Vil
+#' @param enq one survey number (integer) from Exposure$Enq
+#' @param nc number of column in the multipanel plot
 #'
-#' @return
+#' @return a ggplot object
 #' @export
 #'
 #' @examples
@@ -106,12 +107,13 @@ plot_behavior_H <- function(Exposure, vil = c("DOG"), enq = 1, nc = 6){
 	data_graph$people <- as.factor(data_graph$people)
 
 
-	ggplot2::ggplot(data_graph, ggplot2::aes(x=t2, y=value, fill=people)) +
+	plot <- ggplot2::ggplot(data_graph, ggplot2::aes(x=t2, y=value, fill=people)) +
 		ggplot2::geom_area(colour="grey", size=.3, alpha=.4) +
 		ggplot2::scale_fill_brewer(palette="Greens", breaks=rev(levels(data_graph$people))) +
 		ggplot2::facet_wrap(~Vil+Age, ncol=nc) +
 		ggplot2::scale_y_continuous(name = "% of people indoor or under net") +
 		ggplot2::scale_x_continuous(breaks =  c(5,10,15,20),labels=c("17","22","3","8"))
 
+	return(plot)
 }
 
