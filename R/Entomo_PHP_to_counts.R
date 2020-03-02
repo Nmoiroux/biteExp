@@ -7,22 +7,22 @@
 # accents should be removed in column names
 # see file 'Entomo_PHP.RData' for the correct structure
 
-#' convert data from individual mosquitoes collection dataframe to counts of individuals per collection sites (giving 8 collections sites per place, 4 indoors, 4 outdoors)
+#' convert data from a dataframe of individual mosquitoes to counts of individuals per collection sites
 #'
 #'
 #' @param data a data frame of individual mosquitoes with the following column :
 #' `NumMission` survey of collection
 #' `CodeVillage` village code (factor)
-#' `PointDeCapture` collection site (i.e place where collection have been performed both indoors and outdoors) value : 1 to 4
+#' `PointDeCapture` collection site identifier (integer refering to a place where collection have been performed both indoors and outdoors)
 #' `PosteDeCapture` collection point (indoors or oudoors), value = int or ext
-#' `HeureDeCapture` beginning of the collection hours : passible values : 0 to 23
+#' `HeureDeCapture` beginning of the collection hour, values : 0 to 23
 #' `Genre` genus of the individual mosquito (default "Anopheles")
 #' @param v_hours a vector of sarting hours of collection i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning
 #' @param ndays duration (in days) of collection during each survey in each collection point (default = 1)
 #' @param genre the value (string) of the genus for which counts have to be computed (from factors in the `Genre` column, default : "Anopheles")
 #' @keywords
-#' @return a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2""O3""O4" "I1""I2" "I3" "I4"), counts summed indoor and outdoors ("No""Ni"),
-#'  duration of collection indoors and outdoors (i.e., th number of collection point, d = 4), time in a new referential (t). Per villages and survey.
+#' @return a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2""O3""O4" "I1""I2" "I3" "I4"), summed counts both indoor and outdoors ("No""Ni"),
+#'  duration of collection indoors and outdoors ("di" "do", i.e., the product of the number of sites by the number of days), time in a new referential (t). Per villages and survey.
 #' @export
 #' @examples
 #' v_hours <- c(15:23,0:11)
