@@ -4,7 +4,7 @@
 \alias{Entomo_PHP_to_counts}
 \title{convert data from individual mosquitoes collection dataframe to counts of individuals per collection sites (giving 8 collections sites per place, 4 indoors, 4 outdoors)}
 \usage{
-Entomo_PHP_to_counts(data, v_hours, genre = "Anopheles")
+Entomo_PHP_to_counts(data, v_hours, ndays = 1, genre = "Anopheles")
 }
 \arguments{
 \item{data}{a data frame of individual mosquitoes with the following column :
@@ -17,16 +17,19 @@ Entomo_PHP_to_counts(data, v_hours, genre = "Anopheles")
 
 \item{v_hours}{a vector of sarting hours of collection i.e c(15:23,0:11) for collections lasting from 15h in the afternoon to 12h in the morning}
 
+\item{ndays}{duration (in days) of collection during each survey in each collection point (default = 1)}
+
 \item{genre}{the value (string) of the genus for which counts have to be computed (from factors in the `Genre` column, default : "Anopheles")}
 }
 \value{
-a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2""O3""O4" "I1""I2" "I3" "I4"), count summed indoor and outdoors ("No""Ni"),
- duration of collection indoors and outdoors (d = 4), time in a new referential (t). Per villages and survey.
+a dataframe with hourly counts of mosquitoes in each collection point ("O1" "O2""O3""O4" "I1""I2" "I3" "I4"), counts summed indoor and outdoors ("No""Ni"),
+ duration of collection indoors and outdoors (i.e., th number of collection point, d = 4), time in a new referential (t). Per villages and survey.
 }
 \description{
 convert data from individual mosquitoes collection dataframe to counts of individuals per collection sites (giving 8 collections sites per place, 4 indoors, 4 outdoors)
 }
 \examples{
 v_hours <- c(15:23,0:11)
-Entomo_PHP_to_counts(Entomo_PHP, v_hours)
+ndays <- 2
+Entomo_PHP_to_counts(Entomo_PHP, v_hours, ndays)
 }
